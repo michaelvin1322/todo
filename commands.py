@@ -26,7 +26,7 @@ class ListCommand(BaseCommand):
     def label():
         return 'list'
 
-    def perform(self, objects, *args, **kwargs):2
+    def perform(self, objects, *args, **kwargs):
         if len(objects) == 0:
             print('There are no items in storage.')
             return
@@ -55,11 +55,12 @@ class NewCommand(BaseCommand):
         # )
         # return dict(classes)
 
-        from models import ToDoItem, ToBuyItem
+        from models import ToDoItem, ToBuyItem, ToReadItem
 
         return {
             'ToDoItem': ToDoItem,
             'ToBuyItem': ToBuyItem,
+            'ToReadItem': ToReadItem
         }
 
     def perform(self, objects, *args, **kwargs):
