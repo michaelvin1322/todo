@@ -12,6 +12,8 @@ import sys
 from commands import (
     ListCommand,
     NewCommand,
+    DoneCommand,
+    UndoneCommand,
     ExitCommand,
     UserExitException,
 )
@@ -43,6 +45,8 @@ def get_routes():
     return {
         ListCommand.label(): ListCommand,
         NewCommand.label(): NewCommand,
+        DoneCommand.label(): DoneCommand,
+        UndoneCommand.label(): UndoneCommand,
         ExitCommand.label(): ExitCommand,
     }
 
@@ -82,6 +86,8 @@ def parse_user_input():
         {
             ListCommand.label(): ListCommand,
             NewCommand.label(): NewCommand,
+            DoneCommand.label(): DoneCommand,
+            UndoneCommand.label(): UndoneCommand,
             ExitCommand.label(): ExitCommand,
         }.keys()
     )

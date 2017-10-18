@@ -8,7 +8,7 @@ import json
 
 # import custom_exceptions
 from custom_exceptions import UserExitException
-from models import BaseItem
+from models import Storage
 from utils import get_input_function
 
 
@@ -32,8 +32,11 @@ class ListCommand(BaseCommand):
             return
 
         for index, obj in enumerate(objects):
-            print('{}: {}'.format(index, str(obj)))
-
+            if obj.done is True:
+                stat = '+'
+            elif obj.done is False:
+                stat = '-'
+            print('{}: {} {}'.format(index, str(obj), stat))
 
 class NewCommand(BaseCommand):
     @staticmethod
@@ -95,6 +98,65 @@ class NewCommand(BaseCommand):
         print('Added {}'.format(str(new_object)))
         print()
         return new_object
+
+
+class DoneCommand(BaseCommand):
+    @staticmethod
+    def label():
+            return 'done'
+
+    def perform(self, objects, *args, **kwargs):
+        if len(objects) == 0:
+            print('There are no items in storage.')
+            return
+
+        print('Select item:')
+        for index, obj in enumerate(objects):
+            print('{}: {}'.format(index, str(obj)))
+
+
+        input_function = get_input_function()
+        selection = None
+
+        while True:
+            try:
+                selection = int(input_function('Input number: '))
+                break
+            except ValueError:
+                print('Bad input, try again.')
+            except IndexError:
+                print('Wrong index, try again.')
+
+        objects[selection].done = True
+
+
+class UndoneCommand(BaseCommand):
+    @staticmethod
+    def label():
+        return 'undone'
+
+    def perform(self, objects, *args, **kwargs):
+        if len(objects) == 0:
+            print('There are no items in storage.')
+            return
+
+        print('Select item:')
+        for index, obj in enumerate(objects):
+            print('{}: {} '.format(index, str(obj)))
+
+        input_function = get_input_function()
+        selection = None
+
+        while True:
+            try:
+                selection = int(input_function('Input number: '))
+                break
+            except ValueError:
+                print('Bad input, try again.')
+            except IndexError:
+                print('Wrong index, try again.')
+
+        objects[selection].done = False
 
 
 class ExitCommand(BaseCommand):
